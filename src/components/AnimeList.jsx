@@ -1,7 +1,17 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import { Card } from "./Card";
 import { Pagination } from "./Pagination";
 
+const Wrapper = styled.div`
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+
+        @media (min-width: 768px) {
+            justify-content: center;
+        }
+`;
 
 export const AnimeList = () => {
     const [animeList, setAnimeList] = useState([]);
@@ -34,27 +44,24 @@ export const AnimeList = () => {
         setOffset(lastPage);
     };
 
-    console.log("ini", offset);
+    console.log("ini", animeList);
     return (
-        <div>
-            <Pagination
-                onNextPage={onNextPage}
-                onPrevPage={onPrevPage}
-                onFirstPage={onFirstPage}
-                onLastPage={onLastPage}
-                offset={offset}
-                lastPage={lastPage}
-            />
-            <h1>Anime List</h1>
+        <><Wrapper>
             {animeList.data && animeList.data.map((anime) => (
                 <Card
                     key={anime.id}
                     id={anime.id}
                     enTitle={anime.attributes.titles.en ? anime.attributes.titles.en : anime.attributes.titles.en_jp}
                     jpTitle={anime.attributes.titles.ja_jp}
-                    img={anime.attributes.posterImage.small}
-                />
+                    img={anime.attributes.posterImage.small} />
             ))}
-        </div>
+
+        </Wrapper><Pagination
+                onNextPage={onNextPage}
+                onPrevPage={onPrevPage}
+                onFirstPage={onFirstPage}
+                onLastPage={onLastPage}
+                offset={offset}
+                lastPage={lastPage} /></>
     );
 };
