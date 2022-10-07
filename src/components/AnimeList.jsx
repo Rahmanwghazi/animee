@@ -1,23 +1,50 @@
 import { useEffect, useState } from "react";
 import { Card } from "./Card";
+import { Pagination } from "./Pagination";
 
 
 export const AnimeList = () => {
     const [animeList, setAnimeList] = useState([]);
-
-    const getAnime = async () => {
-        const response = await fetch("https://kitsu.io/api/edge/anime");
-        const data = await response.json();
-        setAnimeList(data);
-    };
+    const [offset, setOffset] = useState(0);
 
     useEffect(() => {
+        const getAnime = async () => {
+            const response = await fetch(`https://kitsu.io/api/edge/anime?page[limit]=10&&page[offset]=${offset}`);
+            const data = await response.json();
+            setAnimeList(data);
+        };
         getAnime();
-    }, []);
+    }, [offset]);
 
-    console.log("ini", animeList.data);
+    let lastPage = animeList.meta ? animeList.meta.count - 10 : 0;
+
+    const onNextPage = () => {
+        setOffset(offset + 10);
+    };
+
+    const onPrevPage = () => {
+        setOffset(offset - 10);
+    };
+
+    const onFirstPage = () => {
+        setOffset(0);
+    };
+
+    const onLastPage = () => {
+        setOffset(lastPage);
+    };
+
+    console.log("ini", offset);
     return (
         <div>
+            <Pagination
+                onNextPage={onNextPage}
+                onPrevPage={onPrevPage}
+                onFirstPage={onFirstPage}
+                onLastPage={onLastPage}
+                offset={offset}
+                lastPage={lastPage}
+            />
             <h1>Anime List</h1>
             {animeList.data && animeList.data.map((anime) => (
                 <Card
