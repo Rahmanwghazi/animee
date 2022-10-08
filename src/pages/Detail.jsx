@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import icBack from '../assets/ic_back.png';
-
+import icYoutube from '../assets/ic_youtube.png';
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -17,20 +17,26 @@ const Container = styled.div`
 `;
 
 const PosterImage = styled.div`
-    width: 100%;
-    height: 30vh;
+    width: 100vw;
+    height: 20vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url(${(props) => props.bg});
+
+    @media (min-width: 768px) {
+       height: 30vh;
+    }
 `;
 
 const Title = styled.h2`
     font-size: 24px;
     font-weight: 600;
     text-align: center;
+    margin: 0;
 
     @media (min-width: 768px) {
+        margin: 32px 0 0 0;
         text-align: left;
         font-size: 48px;
     }
@@ -38,6 +44,7 @@ const Title = styled.h2`
 
 const SubTitle = styled.p`
     text-align: center;
+    margin-bottom: 48px;
 
     @media (min-width: 768px) {
         text-align: left;
@@ -87,15 +94,32 @@ const Description = styled.div`
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
+    background-color: #7F7F7F;
+    margin-top: 20px;
     align-items: center;
+
     @media (min-width: 768px) {
         display: flex;
         flex-direction: row;
-        background-color: #8D6346;
         justify-content: flex-start;
-        height: 50vh;
         width: 100%;
-        margin-top: 20px;
+        align-items: flex-start;
+    }
+`;
+
+const YoutubeLink = styled.a`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    margin: 24px;
+    cursor: pointer;
+
+    @media (min-width: 768px) {
+        align-items: center;
+        flex-direction: row;
+        margin: 24px 24px 24px 0;
     }
 `;
 
@@ -113,7 +137,7 @@ export const Detail = () => {
         getAnime();
     }, [id]);
 
-    console.log("sdsd",anime.data?.attributes);
+    console.log(anime);
 
 
     return (
@@ -121,18 +145,34 @@ export const Detail = () => {
             {anime.data && (
                 <>
                     <BackButton onClick={() => navigate(-1)} src={icBack} alt="" />
-                    <PosterImage bg={anime.data.attributes.coverImage !== null ? anime.data.attributes.coverImage.original : anime.data.attributes.posterImage.original }></PosterImage>
+                    <PosterImage bg={anime.data.attributes.coverImage !== null ? anime.data.attributes.coverImage.original : anime.data.attributes.posterImage.original}></PosterImage>
                     <Wrapper>
                         <Image src={anime.data.attributes.posterImage.small} alt="" />
                         <Description >
-                            <Title>{anime.data.attributes.titles.en ? anime.data.attributes.titles.en : anime.data.attributes.titles.en_jp}</Title>
+                            <Title>{anime.data.attributes.titles.en ? anime.data.attributes.titles.en
+                                : (anime.data.attributes.titles.en_us ? anime.data.attributes.titles.en_us
+                                    : (anime.data.attributes.titles.en_jp ? anime.data.attributes.titles.en_jp
+                                        : anime.data.attributes.titles.en_cn))}</Title>
                             <SubTitle>
                                 <p>({anime.data.attributes.titles.ja_jp})</p>
                                 <p>Rating: {anime.data.attributes.averageRating}</p>
                             </SubTitle>
-                            <p>{anime.data?.attributes.synopsis}</p>
+                            <p>{anime.data.attributes.synopsis}</p>
+                            {
+                                anime.data.attributes.youtubeVideoId ? (
+                                    <YoutubeLink href={`https://youtu.be/${anime.data.attributes.youtubeVideoId}`} target="_blank" rel="noreferrer">
+                                        <img src={icYoutube} width="32" alt="" />
+                                        <p>&nbsp;Watch trailer</p>
+                                    </YoutubeLink>
+                                ) : null
+                            }
+
                         </Description>
+
                     </Wrapper>
+
+
+
                 </>
             )}
 

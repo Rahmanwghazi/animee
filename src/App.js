@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import'./App.css'
 
 const Root = styled.div`
-  background-color: #141115;
+  background-color: #CCCCCC;
   color: #fff;
   min-height: 100vh;
   display: flex;

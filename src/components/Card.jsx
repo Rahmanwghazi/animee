@@ -5,10 +5,10 @@ const CardItem = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px 0;
+    // margin: 20px 0;
     max-width: 150px;
     max-height: 300px;
-    background-color: black;
+    background-color: #CCCCCC;
     border-radius: 5px;
     font-size: 1rem;
     padding: 8px;
@@ -35,6 +35,11 @@ const Title = styled.p`
     font-size: 16px;
     font-weight: 600;
     margin: 8px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 
     @media (min-width: 768px) {
         font-size: 20px;
@@ -44,6 +49,13 @@ const Title = styled.p`
 const Subtitle = styled.p`
     font-size: 14px;
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+            line-clamp: 2; 
+    -webkit-box-orient: vertical;
+    
     @media (min-width: 768px) {
         font-size: 14px;
     }

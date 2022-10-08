@@ -5,16 +5,14 @@ export const Pagination = (props) => {
     const Wrapper = styled.div`
         display: flex;
         justify-content: space-evenly;
-        margin: 20px 0;
-        max-width: 300px;
+        margin: 48px 0;
         text-align: center;
-        margin-top: 24px;
     `;
 
     const Button = styled.button`
-        background-color: #141115;
+        background-color: #595959;
         color: #fff;
-        border: 2px solid #8D6346;
+        border: none;
         margin: 0 15px;
         cursor: pointer;
         text-align: center;
@@ -26,8 +24,8 @@ export const Pagination = (props) => {
             cursor: not-allowed;
         }
         &:hover {
-            background-color: #8D6346;
-            // color: #141115;
+            background-color: #F2F2F2;
+            color: #141115;
         }
     `;
 

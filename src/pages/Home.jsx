@@ -10,7 +10,8 @@ export const Home = () => {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        color: #fff;
+        color: #595959;
+        margin-top: 32px;
     `;
 
     return (

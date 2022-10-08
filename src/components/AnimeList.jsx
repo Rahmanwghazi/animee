@@ -51,7 +51,10 @@ export const AnimeList = () => {
                 <Card
                     key={anime.id}
                     id={anime.id}
-                    enTitle={anime.attributes.titles.en ? anime.attributes.titles.en : anime.attributes.titles.en_jp}
+                    enTitle={anime.attributes.titles.en ? anime.attributes.titles.en
+                        : (anime.attributes.titles.en_us ? anime.attributes.titles.en_us
+                            : (anime.attributes.titles.en_jp ? anime.attributes.titles.en_jp 
+                                :  anime.attributes.titles.en_cn))}
                     jpTitle={anime.attributes.titles.ja_jp}
                     img={anime.attributes.posterImage.small} />
             ))}
