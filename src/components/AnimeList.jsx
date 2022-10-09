@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Card } from "./Card";
 import { Pagination } from "./Pagination";
 
+
 const Wrapper = styled.div`
         display: flex;
         flex-wrap: wrap;
@@ -14,8 +15,11 @@ const Wrapper = styled.div`
 `;
 
 export const AnimeList = () => {
+
     const [animeList, setAnimeList] = useState([]);
-    const [offset, setOffset] = useState(0);
+    const [offset, setOffset] = useState(() => {
+        return parseInt(localStorage.getItem('offset')) || 0;
+    });
 
     useEffect(() => {
         const getAnime = async () => {
@@ -24,6 +28,7 @@ export const AnimeList = () => {
             setAnimeList(data);
         };
         getAnime();
+        localStorage.setItem('offset', offset);
     }, [offset]);
 
     let lastPage = animeList.meta ? animeList.meta.count - 10 : 0;
@@ -44,27 +49,29 @@ export const AnimeList = () => {
         setOffset(lastPage);
     };
 
-    console.log("ini", animeList);
     return (
-        <><Wrapper>
-            {animeList.data && animeList.data.map((anime) => (
-                <Card
-                    key={anime.id}
-                    id={anime.id}
-                    enTitle={anime.attributes.titles.en ? anime.attributes.titles.en
-                        : (anime.attributes.titles.en_us ? anime.attributes.titles.en_us
-                            : (anime.attributes.titles.en_jp ? anime.attributes.titles.en_jp 
-                                :  anime.attributes.titles.en_cn))}
-                    jpTitle={anime.attributes.titles.ja_jp}
-                    img={anime.attributes.posterImage.small} />
-            ))}
+        <>
+            <Wrapper>
+                {animeList.data && animeList.data.map((anime) => (
+                    <Card
+                        key={anime.id}
+                        id={anime.id}
+                        enTitle={anime.attributes.titles.en ? anime.attributes.titles.en
+                            : (anime.attributes.titles.en_us ? anime.attributes.titles.en_us
+                                : (anime.attributes.titles.en_jp ? anime.attributes.titles.en_jp
+                                    : anime.attributes.titles.en_cn))}
+                        jpTitle={anime.attributes.titles.ja_jp}
+                        img={anime.attributes.posterImage.small} />
+                ))}
+            </Wrapper>
 
-        </Wrapper><Pagination
+            <Pagination
                 onNextPage={onNextPage}
                 onPrevPage={onPrevPage}
                 onFirstPage={onFirstPage}
                 onLastPage={onLastPage}
                 offset={offset}
-                lastPage={lastPage} /></>
+                lastPage={lastPage} />
+        </>
     );
 };

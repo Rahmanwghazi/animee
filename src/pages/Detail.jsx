@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import icBack from '../assets/ic_back.png';
 import icYoutube from '../assets/ic_youtube.png';
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -42,7 +43,7 @@ const Title = styled.h2`
     }
 `;
 
-const SubTitle = styled.p`
+const SubTitle = styled.div`
     text-align: center;
     margin-bottom: 48px;
 
@@ -93,6 +94,7 @@ const Description = styled.div`
 
 const Wrapper = styled.div`
     display: flex;
+    justify-content: center;
     flex-direction: column;
     background-color: #7F7F7F;
     margin-top: 20px;
@@ -101,7 +103,6 @@ const Wrapper = styled.div`
     @media (min-width: 768px) {
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
         width: 100%;
         align-items: flex-start;
     }
@@ -137,15 +138,12 @@ export const Detail = () => {
         getAnime();
     }, [id]);
 
-    console.log(anime);
-
-
     return (
         <Container>
             {anime.data && (
                 <>
                     <BackButton onClick={() => navigate(-1)} src={icBack} alt="" />
-                    <PosterImage bg={anime.data.attributes.coverImage !== null ? anime.data.attributes.coverImage.original : anime.data.attributes.posterImage.original}></PosterImage>
+                    <PosterImage bg={anime.data.attributes.coverImage ? anime.data.attributes.coverImage.original : anime.data.attributes.posterImage.original}></PosterImage>
                     <Wrapper>
                         <Image src={anime.data.attributes.posterImage.small} alt="" />
                         <Description >
@@ -154,8 +152,8 @@ export const Detail = () => {
                                     : (anime.data.attributes.titles.en_jp ? anime.data.attributes.titles.en_jp
                                         : anime.data.attributes.titles.en_cn))}</Title>
                             <SubTitle>
-                                <p>({anime.data.attributes.titles.ja_jp})</p>
-                                <p>Rating: {anime.data.attributes.averageRating}</p>
+                                <p>{anime.data.attributes.titles.ja_jp ? anime.data.attributes.titles.ja_jp : "-"}</p>
+                                <p>Rating: {anime.data.attributes.averageRating ? anime.data.attributes.averageRating : "-"}</p>
                             </SubTitle>
                             <p>{anime.data.attributes.synopsis}</p>
                             {
@@ -168,11 +166,7 @@ export const Detail = () => {
                             }
 
                         </Description>
-
                     </Wrapper>
-
-
-
                 </>
             )}
 

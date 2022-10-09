@@ -5,13 +5,13 @@ const CardItem = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    // margin: 20px 0;
     max-width: 150px;
     max-height: 300px;
     background-color: #CCCCCC;
     border-radius: 5px;
     font-size: 1rem;
     padding: 8px;
+    margin-bottom: 16px;
 
     @media (min-width: 768px) {
         cursor: pointer;
@@ -60,7 +60,6 @@ const Subtitle = styled.p`
         font-size: 14px;
     }
 `;
-
 
 export const Card = (props) => {
     const navigate = useNavigate();
