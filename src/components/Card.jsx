@@ -5,9 +5,8 @@ const CardItem = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 150px;
-    max-height: 300px;
-    background-color: #CCCCCC;
+    width: 250px;
+    height: 400px;
     border-radius: 5px;
     font-size: 1rem;
     padding: 8px;
